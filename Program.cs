@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using OpenCvSharp;
+using Microsoft.Extensions.Configuration;
 
 namespace SpaceWindow
 {
     class Program
-    {
+    {        
         static void RunCamera2Face()
         {
             var camera1 = new Camera2Face(0, showWindow: true);
@@ -24,23 +26,21 @@ namespace SpaceWindow
 
         static void RunColorDetection ()
         {
-            var colorLow1 = new Scalar(0, 120, 70);
-            var colorUp1 = new Scalar(10, 255, 255);
-
-            var colorLow2 = new Scalar(170, 120, 70);
-            var colorUp2 = new Scalar(180, 255, 255);
-
-            var minArea = 1000;
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+            var cfg = configuration.GetSection("GloveSettings").Get<GloveSettings>();
 
             var camera1 = new Camera2Color
             (
-                0,
-                colorLow1,
-                colorUp1,
-                colorLow2,
-                colorUp2,
-                minArea,
-                mode: Camera2Color.ShowMode.CameraAndMask
+                cfg.CameraIndex,
+                cfg.ColorRanges.Lower1,
+                cfg.ColorRanges.Upper1,
+                cfg.ColorRanges.Lower2,
+                cfg.ColorRanges.Upper2,
+                cfg.MinArea,
+                cfg.CameraMode
             );
             int sleepTime = (int)Math.Round(1000 / 30.0);
 

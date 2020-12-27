@@ -36,19 +36,19 @@ namespace SpaceWindow
 
         public Camera2Color(
             int cameraIndex,
-            Scalar colorLow1,
-            Scalar colorUp1,
-            Scalar colorLow2,
-            Scalar colorUp2,
+            int[] colorLow1,
+            int[] colorUp1,
+            int[] colorLow2,
+            int[] colorUp2,
             double minArea = 1000,
             ShowMode mode = ShowMode.None
         )
         {
             _mode = mode;
-            _colorLow1 = colorLow1;
-            _colorUp1 = colorUp1;
-            _colorLow2 = colorLow2;
-            _colorUp2 = colorUp2;
+            _colorLow1 = new Scalar(colorLow1[0], colorLow1[1], colorLow1[2]);
+            _colorUp1 = new Scalar(colorUp1[0], colorUp1[1], colorUp1[2]);
+            _colorLow2 = new Scalar(colorLow2[0], colorLow2[1], colorLow2[2]);
+            _colorUp2 = new Scalar(colorUp2[0], colorUp2[1], colorUp2[2]);
             _minArea = minArea;
 
             _capture = new VideoCapture(cameraIndex);
