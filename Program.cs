@@ -24,13 +24,24 @@ namespace SpaceWindow
 
         static void RunColorDetection ()
         {
-            var colorLow = new Scalar(169,100,100);
-            var colorUp = new Scalar(189,255,255);
+            var colorLow1 = new Scalar(0, 120, 70);
+            var colorUp1 = new Scalar(10, 255, 255);
 
-            //var colorLow = new Scalar(0,50,120);
-            //var colorUp = new Scalar(10,255,255);
+            var colorLow2 = new Scalar(170, 120, 70);
+            var colorUp2 = new Scalar(180, 255, 255);
 
-            var camera1 = new Camera2Color(0, colorLow, colorUp, showWindow: true);
+            var minArea = 1000;
+
+            var camera1 = new Camera2Color
+            (
+                0,
+                colorLow1,
+                colorUp1,
+                colorLow2,
+                colorUp2,
+                minArea,
+                mode: Camera2Color.ShowMode.CameraAndMask
+            );
             int sleepTime = (int)Math.Round(1000 / 30.0);
 
             while (true)
