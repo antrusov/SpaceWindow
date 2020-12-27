@@ -2,6 +2,8 @@
 using System.IO;
 using OpenCvSharp;
 using Microsoft.Extensions.Configuration;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SpaceWindow
 {
@@ -42,14 +44,31 @@ namespace SpaceWindow
                 cfg.MinArea,
                 cfg.CameraMode
             );
-            int sleepTime = (int)Math.Round(1000 / 30.0);
+            var notifier = new Notifier(cfg.BaseAddress, cfg.Query);
+            var scaleX = new Scale(0, camera1.Width, cfg.Area.X1, cfg.Area.X2);
+            var scaleY = new Scale(0, camera1.Height, cfg.Area.Y1, cfg.Area.Y2);
+
+            var oldx = 0.0;
+            var oldy = 0.0;
 
             while (true)
             {
+                //получить координаты красного объекта
                 camera1.Update();
 
-                //выход
-                if (Cv2.WaitKey(sleepTime) != -1)
+                //подготовить данные для отправки
+                var x = scaleX.Get(camera1.X);
+                var y = scaleY.Get(camera1.Y);
+                var vx = (x - oldx) * cfg.VelocityCoefficient;
+                var vy = (y - oldy) * cfg.VelocityCoefficient;
+                oldx = x;
+                oldy = y;
+
+                //отправить информацию на сервер
+                notifier.Update(x, y, vx, vy).GetAwaiter().GetResult();
+
+                //интервал между отправкой данных + выход если нажата клавиша
+                if (Cv2.WaitKey(cfg.Period) != -1)
                     break;
             } 
         }

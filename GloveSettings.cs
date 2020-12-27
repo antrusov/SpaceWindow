@@ -5,8 +5,10 @@ namespace SpaceWindow
 {
     public class GloveSettings
     {
-        public string Url { get; set; }
+        public string BaseAddress { get; set; }
+        public string Query { get; set; }
         public int Period { get; set; }
+        public double VelocityCoefficient { get; set; }
         public int MinArea { get; set; }
         public Area Area { get; set; }
 
