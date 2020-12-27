@@ -101,7 +101,7 @@ namespace SpaceWindow
                     Cv2.Ellipse(_dst, center, axes, 0, 0, 360, new Scalar(255, 0, 0), 1);
                 }
 
-                //найденные координатыs
+                //найденные координаты
                 {
                     var x = _smothX.Value;
                     var y = _smothY.Value;
