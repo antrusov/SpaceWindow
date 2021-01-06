@@ -11,14 +11,27 @@ namespace SpaceWindow
     {        
         static void RunCamera2Face()
         {
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+            var cfg = configuration.GetSection("FaceTrackerSettings").Get<FaceTrackerSettings>();
+            
             var camera1 = new Camera2Face(0, showWindow: true);
             var camera2 = new Camera2Face(1, showWindow: true);
+            var solver = new StereoSolver(cfg.DistanceBetweenCameras, cfg.CameraHeight, cfg.CameraHorizontalAngle, cfg.CameraVerticalAngle, cfg.ImageWidth, cfg.ImageHeight);
             int sleepTime = (int)Math.Round(1000 / 30.0);
 
             while (true)
             {
                 camera1.Update();
                 camera2.Update();
+                var pos = solver.To3D(
+                    new Point(camera1.X, camera1.Y),
+                    new Point(camera2.X, camera2.Y)
+                );
+
+                Console.WriteLine($"{pos.X:0.###}\t{pos.Y:0.###}\t{pos.Z:0.###}");
 
                 //выход
                 if (Cv2.WaitKey(sleepTime) != -1)
@@ -112,9 +125,9 @@ namespace SpaceWindow
         {
             try
             {
-                //RunCamera2Face();
+                  RunCamera2Face();
                 //RunColorDetection();
-                RunColorConfig();
+                //RunColorConfig();
             }
             catch (Exception ex)
             {
