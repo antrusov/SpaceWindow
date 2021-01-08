@@ -2,6 +2,8 @@ using System;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
 
 namespace SpaceWindow
 {
@@ -28,11 +30,16 @@ namespace SpaceWindow
         #endregion
 
         public TrinangleWindow(int width, int height, string title)
-            :base(width, height, new GraphicsMode(), title)
-        {
+            :base(
+                new GameWindowSettings(),
+                new NativeWindowSettings() {
+                    Size = new OpenTK.Mathematics.Vector2i(width, height)
+                }
+            )
+        {            
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected override void OnLoad()
         {
             //отладочная информация
             Console.WriteLine(GL.GetString(StringName.Extensions));
@@ -68,18 +75,18 @@ namespace SpaceWindow
             SwapBuffers();
         }
 
-        protected override void OnResize(EventArgs e)
+        protected override void OnResize(ResizeEventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, Size.X, Size.Y);
             base.OnResize(e);
         }
 
-        protected override void OnUnload(EventArgs e)
+        protected override void OnUnload()
         {
             shader.Dispose();
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.DeleteBuffer(VertexBufferObject);
-            base.OnUnload(e);
+            base.OnUnload();
         }
     }
 }
