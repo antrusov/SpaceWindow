@@ -121,13 +121,38 @@ namespace SpaceWindow
             }
         }
 
+        static void RunCubemap()
+        {
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+            var cfg = configuration.GetSection("CubemapSettings").Get<CubemapSettings>();
+
+            var box = new Skybox();
+        }
+
+        static void RunTriangle()
+        {
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+            var cfg = configuration.GetSection("TriangleSettings").Get<TriangleSettings>();
+
+            using var window = new TrinangleWindow(cfg.Width, cfg.Height, cfg.Title);
+            window.Run();
+        }
+
         static void Main(string[] args)
         {
             try
             {
-                  RunCamera2Face();
+                //RunCamera2Face();
                 //RunColorDetection();
                 //RunColorConfig();
+                //RunCubemap();
+                RunTriangle();
             }
             catch (Exception ex)
             {
