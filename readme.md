@@ -8,15 +8,15 @@
 * dotnet add package OpenTK
 * dotnet publish --configuration Release -r win10-x64 -p:ublishingleile=true -p:ublishrimmed=true --self-contained true
 
-# выполнено
-* поработать с определением цвета (добавить ползунки?): http://robocraft.ru/blog/computervision/402.html
-
 # планы
-* почитать (и применить) фильтр Калмана вместо скользящего среднего: https://habr.com/ru/flows/admin/
-* а еще есть двойное экспоненциальное сглаживание: https://en.wikipedia.org/wiki/Exponential_smoothing#Double_exponential_smoothing
-
+* скрестить (в разных потоках) вычисление координат наблюдателя и отображение обьекта.
 * разобраться с матрицей проецирования (термин head-coupled): https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/opengl-perspective-projection-matrix
 * public static Matrix4 CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float depthNear, float depthFar);
+
+# выполнено
+* поработать с определением цвета (добавить ползунки?): http://robocraft.ru/blog/computervision/402.html
+* почитать (и применить) фильтр Калмана вместо скользящего среднего: https://habr.com/ru/flows/admin/
+* а еще есть двойное экспоненциальное сглаживание: https://en.wikipedia.org/wiki/Exponential_smoothing#Double_exponential_smoothing
 
 # Всяка лабуда
 
