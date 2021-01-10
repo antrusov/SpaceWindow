@@ -25,7 +25,7 @@ namespace SpaceWindow
         public int X { get; private set; }
         public int Y { get; private set; }
 
-        public Camera2Face(int cameraIndex, double a = 0.1, string haarcascadeFileName = "haarcascade_frontalface_alt.xml", bool showWindow = false)
+        public Camera2Face(int cameraIndex, double a = 0.1, string haarcascadeFileName = "XML/haarcascade_frontalface_alt.xml", bool showWindow = false)
         {
             _init = false;
             _smothX = new Smoth(a);

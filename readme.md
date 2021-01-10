@@ -13,7 +13,7 @@
 * а еще есть двойное экспоненциальное сглаживание: https://en.wikipedia.org/wiki/Exponential_smoothing#Double_exponential_smoothing
 * поработать с определением цвета (добавить пользунки?): http://robocraft.ru/blog/computervision/402.html
 * разобраться с матрицей проецирования (термин head-coupled): https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/opengl-perspective-projection-matrix
-* three.js умеет setViewOffset (то, что нам надо): https://threejs.org/docs/index.html#api/en/cameras/PerspectiveCamera.setViewOffset + https://github.com/auduno/headtrackr/blob/master/src/controllers.js
+* public static Matrix4 CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float depthNear, float depthFar);
 
 # Всяка лабуда
 

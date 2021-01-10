@@ -9,12 +9,9 @@ namespace SpaceWindow
 {
     class Program
     {        
-        static void RunCamera2Face()
+        //отслеживание координат лица
+        static void RunCamera2Face(IConfiguration configuration)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
             var cfg = configuration.GetSection("FaceTrackerSettings").Get<FaceTrackerSettings>();
             
             var camera1 = new Camera2Face(0, showWindow: true);
@@ -39,12 +36,9 @@ namespace SpaceWindow
             } 
         }
 
-        static void RunColorDetection ()
+        //отслеживание координат цветового пятна
+        static void RunColorDetection (IConfiguration configuration)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
             var cfg = configuration.GetSection("GloveSettings").Get<GloveSettings>();
 
             var camera1 = new Camera2Color
@@ -86,15 +80,12 @@ namespace SpaceWindow
             } 
         }
 
-        static void RunColorConfig ()
+        //тестовый прогон фильтрации цветового пятна по картинке
+        static void RunColorConfig (IConfiguration configuration)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
             var cfg = configuration.GetSection("GloveSettings").Get<GloveSettings>();
 
-            var src = new Mat("img1.png");
+            var src = new Mat("RunColorConfig/img1.png");
             var dst = new Mat();
             var hsv = new Mat();
             var mask = new Mat();
@@ -121,23 +112,30 @@ namespace SpaceWindow
             }
         }
 
-        static void RunCubemap()
+        //интерактивная фильтрация цветового пятна (с ползунками)
+        static void RunColorFilter (IConfiguration configuration)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
+            var cfg = configuration.GetSection("FaceTrackerSettings").Get<FaceTrackerSettings>();
+
+            //исходное окно
+            //окна: каналами + ползунки + обрезанный канал
+            //результирующее окно
+
+            //int h = 0;
+            //Cv2.CreateTrackbar("H", "src image", ref h, 255);
+        }
+
+        //отображение кубической карты (с учетом положения камеры)
+        static void RunCubemap(IConfiguration configuration)
+        {
             var cfg = configuration.GetSection("CubemapSettings").Get<CubemapSettings>();
 
             var box = new Skybox();
         }
 
-        static void RunTriangle()
+        //эксперименты с OpenGL (отображение треугольника)
+        static void RunTriangle(IConfiguration configuration)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
             var cfg = configuration.GetSection("TriangleSettings").Get<TriangleSettings>();
 
             using var window = new TrinangleWindow(cfg.Width, cfg.Height, cfg.Title);
@@ -148,11 +146,17 @@ namespace SpaceWindow
         {
             try
             {
-                //RunCamera2Face();
-                //RunColorDetection();
-                //RunColorConfig();
-                //RunCubemap();
-                RunTriangle();
+                IConfiguration configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", true, true)
+                    .Build();
+
+                //RunCamera2Face(configuration);
+                //RunColorDetection(configuration);
+                //RunColorConfig(configuration);
+                RunColorFilter(configuration);
+                //RunCubemap(configuration);
+                //RunTriangle(configuration);
             }
             catch (Exception ex)
             {

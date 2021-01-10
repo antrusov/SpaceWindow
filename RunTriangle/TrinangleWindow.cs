@@ -61,7 +61,7 @@ namespace SpaceWindow
             GL.EnableVertexAttribArray(0); //включить 0 переменную в вершинном шейдере
 
             //настройка шейдера
-            shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");            
+            shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
