@@ -162,10 +162,10 @@ namespace SpaceWindow
                     .AddJsonFile("appsettings.json", true, true)
                     .Build();
 
-                //RunCamera2Face(configuration);
+                RunCamera2Face(configuration);
                 //RunColorDetection(configuration);
                 //RunColorConfig(configuration);
-                RunColorFilter(configuration);
+                //RunColorFilter(configuration);
                 //RunCubemap(configuration);
                 //RunTriangle(configuration);
             }

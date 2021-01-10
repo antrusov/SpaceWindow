@@ -6,10 +6,10 @@ namespace SpaceWindow
     public class Camera2Face
     {
         bool _init;
-        Smoth _smothX;
-        Smoth _smothY;
-        Smoth _smothWidth;
-        Smoth _smothHeight;
+        DESmoth _smothX;
+        DESmoth _smothY;
+        DESmoth _smothWidth;
+        DESmoth _smothHeight;
 
         VideoCapture _capture;
         CascadeClassifier _classifier;
@@ -28,10 +28,10 @@ namespace SpaceWindow
         public Camera2Face(int cameraIndex, double a = 0.1, string haarcascadeFileName = "XML/haarcascade_frontalface_alt.xml", bool showWindow = false)
         {
             _init = false;
-            _smothX = new Smoth(a);
-            _smothY = new Smoth(a);
-            _smothWidth = new Smoth(a);
-            _smothHeight = new Smoth(a);
+            _smothX = new DESmoth(a);
+            _smothY = new DESmoth(a);
+            _smothWidth = new DESmoth(a);
+            _smothHeight = new DESmoth(a);
 
             _capture = new VideoCapture(cameraIndex);
             _classifier = new CascadeClassifier(haarcascadeFileName);
