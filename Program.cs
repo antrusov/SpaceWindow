@@ -115,14 +115,25 @@ namespace SpaceWindow
         //интерактивная фильтрация цветового пятна (с ползунками)
         static void RunColorFilter (IConfiguration configuration)
         {
-            var cfg = configuration.GetSection("FaceTrackerSettings").Get<FaceTrackerSettings>();
+            var cfg = configuration.GetSection("ColorConfigSettings").Get<ColorConfigSettings>();
 
-            //исходное окно
-            //окна: каналами + ползунки + обрезанный канал
-            //результирующее окно
+            var filter = new Camera2ColorFilter(
+                cfg.CameraIndex,
+                cfg.H.Min, cfg.H.Max,
+                cfg.S.Min, cfg.S.Max,
+                cfg.V.Min, cfg.V.Max
+            );
+            int sleepTime = (int)Math.Round(1000 / 30.0);
 
-            //int h = 0;
-            //Cv2.CreateTrackbar("H", "src image", ref h, 255);
+            while (true)
+            {
+                //получить координаты красного объекта
+                filter.Update();
+
+                //интервал между отправкой данных + выход если нажата клавиша
+                if (Cv2.WaitKey(sleepTime) != -1)
+                    break;
+            } 
         }
 
         //отображение кубической карты (с учетом положения камеры)
