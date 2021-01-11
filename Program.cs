@@ -153,6 +153,14 @@ namespace SpaceWindow
             window.Run();
         }
 
+        static void RunTriangleWithDetection(IConfiguration configuration)
+        {
+            var cfg = configuration.GetSection("TriangleWithDetectionSettings").Get<TriangleWithDetectionSettings>();
+
+            var sample = new TriangleWithDetection();
+            sample.Run();
+        }
+
         static void Main(string[] args)
         {
             try
@@ -162,18 +170,21 @@ namespace SpaceWindow
                     .AddJsonFile("appsettings.json", true, true)
                     .Build();
 
-                RunCamera2Face(configuration);
+                //RunCamera2Face(configuration);
                 //RunColorDetection(configuration);
                 //RunColorConfig(configuration);
                 //RunColorFilter(configuration);
                 //RunCubemap(configuration);
                 //RunTriangle(configuration);
+                RunTriangleWithDetection(configuration);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message, ex.StackTrace);
                 Console.ReadLine();
             }
+
+            Console.ReadLine();
         }
     }
 }
