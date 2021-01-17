@@ -6,17 +6,19 @@ namespace SpaceWindow
 {
     class FaceTracker
     {
+        Camera2Face camera1;
+        Camera2Face camera2;
         FaceTrackerSettings _cfg;
         ThreadSafeValue<OpenCvSharp.Point3d> _pos;
-
         Thread t;
-
         bool run = false;
 
         public FaceTracker(FaceTrackerSettings cfg, ThreadSafeValue<OpenCvSharp.Point3d> pos)
         {
             _cfg = cfg;
             _pos = pos;
+            camera1 = new Camera2Face(0, showWindow: true);
+            camera2 = new Camera2Face(1, showWindow: true);
         }
 
         public void StartTracking ()
@@ -37,8 +39,6 @@ namespace SpaceWindow
             run = true;
 
             //init
-            var camera1 = new Camera2Face(0, showWindow: true);
-            var camera2 = new Camera2Face(1, showWindow: true);
             var solver = new StereoSolver(_cfg.DistanceBetweenCameras, _cfg.CameraHeight, _cfg.CameraHorizontalAngle, _cfg.CameraVerticalAngle, _cfg.ImageWidth, _cfg.ImageHeight);
             int sleepTime = (int)Math.Round(1000 / 30.0);
 
@@ -53,7 +53,6 @@ namespace SpaceWindow
                 );
 
                 _pos.Value = pos;
-                Console.WriteLine($"{pos.X:0.###}\t{pos.Y:0.###}\t{pos.Z:0.###}");
 
                 Thread.Sleep(sleepTime);
             }

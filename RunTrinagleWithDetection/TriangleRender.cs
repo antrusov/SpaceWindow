@@ -18,7 +18,9 @@ namespace SpaceWindow
             while (true)
             {
                 //...
-                Console.WriteLine(_pos.Value);
+                var pos = _pos.Value;
+                Console.WriteLine($"{pos.X:0.###}\t{pos.Y:0.###}\t{pos.Z:0.###}");
+
                 if (OpenCvSharp.Cv2.WaitKey(100) != -1)
                     break;
             }
