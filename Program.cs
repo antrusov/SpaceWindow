@@ -157,7 +157,7 @@ namespace SpaceWindow
         {
             var cfg = configuration.GetSection("TriangleWithDetectionSettings").Get<TriangleWithDetectionSettings>();
 
-            var sample = new TriangleWithDetection();
+            var sample = new TriangleWithDetection(cfg);
             sample.Run();
         }
 
